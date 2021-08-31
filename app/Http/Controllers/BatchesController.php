@@ -5,12 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Batches;
 use App\Classrooms;
+use App\Batch_Teachers;
+use Auth;
+use App\User;
+
 class BatchesController extends Controller
 {
   public function index()
   {
     $batches = Batches::all();
     return $batches;
+  }
+
+  public function getTeacherBatches()
+  {
+    $batch_ids = Batch_Teachers::where('teacher_id',Auth::id())->pluck('batch_id');
+    $batches = Batches::whereIn('id',$batch_ids)->get();
+    return $batches;
+  }
+
+  public function getBatchStudents($batch_id)
+  {
+    $students = User::where('batch_id',$batch_id)->get();
+    return $students;
   }
 
   public function store(Request $request)

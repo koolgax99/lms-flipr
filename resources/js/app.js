@@ -12,9 +12,11 @@ import { store } from './store/index'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import '@mdi/font/css/materialdesignicons.css'
+import DatetimePicker from 'vuetify-datetime-picker'
 
 Vue.use(Vuetify)
-
+Vue.use(DatetimePicker)
 // Set Vue globally
 window.Vue = Vue
 
@@ -34,5 +36,8 @@ const app = new Vue({
     el: '#app',
     router,
     store,
-    vuetify: new Vuetify()
+    vuetify: new Vuetify(),
+    icons: {
+      iconfont: 'mdi',
+    },
 });

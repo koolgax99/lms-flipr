@@ -4,11 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subjects;
+use App\Classroom_Teachers;
+use App\Batch_Teachers;
+use Auth;
 class SubjectsController extends Controller
 {
   public function index()
   {
     $subjects = Subjects::all();
+    return $subjects;
+  }
+
+  public function getTeacherClassroomSubjects($classroom_id)
+  {
+    $subject_ids = Classroom_Teachers::where([['classroom_id',$classroom_id],['teacher_id',Auth::id()]])->pluck('subject_id');
+    $subjects = Subjects::whereIn('id',$subject_ids)->get();
+    return $subjects;
+  }
+
+  public function getTeacherBatchSubjects($batch_id)
+  {
+    $subject_ids = Batch_Teachers::where([['batch_id',$batch_id],['teacher_id',Auth::id()]])->pluck('subject_id');
+    $subjects = Subjects::whereIn('id',$subject_ids)->get();
     return $subjects;
   }
 

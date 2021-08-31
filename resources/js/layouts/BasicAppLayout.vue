@@ -1,123 +1,91 @@
 <template>
-  <v-app id="keep">
-    <v-app-bar
-      app
-      clipped-left
-      color="amber"
-    >
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <span class="title ml-3 mr-5">Google&nbsp;<span class="font-weight-light">Keep</span></span>
-      <v-text-field
-        solo-inverted
-        flat
-        hide-details
-        label="Search"
-        prepend-inner-icon="search"
-      ></v-text-field>
+    <v-app id="inspire">
+        <v-navigation-drawer v-model="drawer" app>
+            <v-list dense>
+                <v-list-item link :to="{ name: 'dashboard' }">
+                    <v-list-item-action>
+                        <v-icon>mdi-home</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Home</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item link :to="{ name: 'assignments.index' }">
+                    <v-list-item-action>
+                        <v-icon>mdi-attachment</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Assignments</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item link :to="{ name: 'assignments.analysis' }">
+                    <v-list-item-action>
+                        <v-icon>mdi-chart-bar</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title
+                            >Assignment Analysis</v-list-item-title
+                        >
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item link  :to="{ name: 'attendance.index' }">
+                    <v-list-item-action>
+                        <v-icon>mdi-calendar-multiple</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Attendance</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item link :to="{ name: 'materials.index' }">
+                    <v-list-item-action>
+                        <v-icon>mdi-book-multiple</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Study Materials</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item link :to="{ name: 'notices.index' }">
+                    <v-list-item-action>
+                        <v-icon>mdi-note-multiple</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Notices</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
 
-      <v-spacer></v-spacer>
-    </v-app-bar>
+        <v-app-bar app color="indigo" dark>
+            <v-app-bar-nav-icon
+                @click.stop="drawer = !drawer"
+            ></v-app-bar-nav-icon>
+            <v-toolbar-title>Application</v-toolbar-title>
+        </v-app-bar>
 
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      clipped
-      color="grey lighten-4"
-    >
-      <v-list
-        dense
-        class="grey lighten-4"
-      >
-        <template v-for="(item, i) in items">
-          <v-row
-            v-if="item.heading"
-            :key="i"
-            align="center"
-          >
-            <v-col cols="6">
-              <v-subheader v-if="item.heading">
-                {{ item.heading }}
-              </v-subheader>
-            </v-col>
-            <v-col
-              cols="6"
-              class="text-right"
+        <v-main>
+            <v-container class="fill-height" fluid>
+                <v-row>
+                    <v-col xs="12" sm="12" md="12">
+                        <router-view></router-view>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-main>
+        <v-footer color="indigo" app>
+            <span class="white--text"
+                >&copy; {{ new Date().getFullYear() }}</span
             >
-              <v-btn
-                small
-                text
-              >edit</v-btn>
-            </v-col>
-          </v-row>
-          <v-divider
-            v-else-if="item.divider"
-            :key="i"
-            dark
-            class="my-4"
-          ></v-divider>
-          <v-list-item
-            v-else
-            :key="i"
-            link
-          >
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title class="grey--text">
-                {{ item.text }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-main>
-      <v-container
-        fluid
-        class="grey lighten-4 fill-height"
-      >
-        <v-row
-          justify="center"
-          align="center"
-        >
-            <router-view></router-view>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
+        </v-footer>
+    </v-app>
 </template>
 
 <script>
-  export default {
+export default {
     props: {
-      source: String,
+        source: String
     },
     data: () => ({
-      drawer: null,
-      items: [
-        { icon: 'lightbulb_outline', text: 'Notes' },
-        { icon: 'touch_app', text: 'Reminders' },
-        { divider: true },
-        { heading: 'Labels' },
-        { icon: 'add', text: 'Create new label' },
-        { divider: true },
-        { icon: 'archive', text: 'Archive' },
-        { icon: 'delete', text: 'Trash' },
-        { divider: true },
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'chat_bubble', text: 'Trash' },
-        { icon: 'help', text: 'Help' },
-        { icon: 'phonelink', text: 'App downloads' },
-        { icon: 'keyboard', text: 'Keyboard shortcuts' },
-      ],
-    }),
-  }
+        drawer: null
+    })
+};
 </script>
-
-<style>
-#keep .v-navigation-drawer__border {
-  display: none
-}
-</style>

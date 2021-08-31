@@ -17,7 +17,7 @@ class CreateBatchesTable extends Migration
             $table->increments('id');
             $table->text('title');
             $table->text('description')->nullable();
-            $table->unsignedInteger('classroom_id');
+            $table->unsignedInteger('classroom_id')->nullable();
             $table->foreign('classroom_id')->references('id')->on('classrooms');
             $table->text('visibility')->nullable();
             $table->timestamps();

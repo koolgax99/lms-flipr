@@ -64,6 +64,11 @@ class AuthController extends Controller
         ]);
     }
 
+    public function getUserRole()
+    {
+      $role = Auth::user()->role_id;
+      return $role; 
+    }
     public function refresh()
     {
         if ($token = $this->guard()->refresh()) {
@@ -80,4 +85,3 @@ class AuthController extends Controller
         return Auth::guard();
     }
 }
-

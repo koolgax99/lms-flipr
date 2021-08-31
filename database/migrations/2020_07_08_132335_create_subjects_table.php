@@ -17,13 +17,13 @@ class CreateSubjectsTable extends Migration
             $table->increments('id');
             $table->text('title');
             $table->text('description')->nullable();
-            $table->text('code');
-            $table->text('semester');
+            $table->text('code')->nullable();
+            $table->text('semester')->nullable();
             $table->text('lecture_hours_per_week')->nullable();
             $table->text('tutorial_hours_per_week')->nullable();
             $table->text('practical_hours_per_week')->nullable();
             $table->text('ss_hours_per_week')->nullable();
-            $table->text('credits');
+            $table->text('credits')->nullable();
             $table->timestamps();
 
         });
